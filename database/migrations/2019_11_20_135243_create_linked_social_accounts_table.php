@@ -14,11 +14,14 @@ class CreateLinkedSocialAccountsTable extends Migration
     public function up()
     {
         Schema::create('linked_social_accounts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->char('id',17)->unique();
             $table->string('provider_id');
             $table->string('provider_name');
-            $table->unsignedInteger('user_id');
+            $table->char('user_id',17);
             $table->timestamps();
+        });
+
+        Schema::table('linked_social_accounts', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
